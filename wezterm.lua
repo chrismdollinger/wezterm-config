@@ -1,25 +1,10 @@
-local wezterm = require 'wezterm'
-local config = wezterm.config_builder()
+local wezterm = require('wezterm')
+local config = wezterm.config_builder() -- config_builder() makes config parse errors more helpful
+local platform_helper = require(wezterm.target_triple) -- loads platform-specific module
 
--- This is where you actually apply your config choices
 config.color_scheme = 'Apple System Colors'
+config.launch_menu = {} -- launchers are inserted further in
 
-if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
-    config.font = wezterm.font('Cascadia Code NF')
-    config.default_prog = { 'nu' }
-
-    config.launch_menu = {
-        {
-            label = 'Oracle Sql Developer Command Line (SqlCl)',
-            args = { 'sql', '/nolog' },
-        }
-    }
-
-end
-
-if wezterm.target_triple == 'aarch64-apple-darwin' then
-    config.font = wezterm.font('CaskaydiaCove Nerd Font Mono')
-    native_macos_fullscreen_mode = false
-end
+platform_helper.apply_to_config(config)
 
 return config
