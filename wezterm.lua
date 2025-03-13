@@ -4,6 +4,8 @@ local platform_helper = require(wezterm.target_triple) -- loads platform-specifi
 
 config.color_scheme = 'Apple System Colors'
 config.launch_menu = {} -- launchers are inserted further in
+config.initial_rows = 48
+config.initial_cols = 160
 
 platform_helper.apply_to_config(config)
 
